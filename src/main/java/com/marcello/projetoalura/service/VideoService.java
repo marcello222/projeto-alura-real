@@ -12,22 +12,19 @@ import org.springframework.stereotype.Service;
 
 import com.marcello.projetoalura.entities.Video;
 import com.marcello.projetoalura.repositories.VideoRepository;
+import com.marcello.projetoalura.service.exception.DatabaseException;
 import com.marcello.projetoalura.service.exception.ResourceNotFoundException;
-import com.marcello.projetoalura.service.exception.VideoException;
 
 @Service
 public class VideoService {
-	
-	
-	
+
 	@Autowired
 	public VideoRepository repository;
-	
-	
+
 	public List<Video> findAll() {
 		return repository.findAll();
 	}
-	
+
 	public Video findById(Long id) {
 		Optional<Video> obj = repository.findById(id);
 		return obj.get();
@@ -36,12 +33,12 @@ public class VideoService {
 	public Video insert(Video obj) {
 		return repository.save(obj);
 	}
-	
+
 	public Video update(Long id, Video obj) {
 		try {
 			Video entity = repository.getOne(id);
 			updateVideo(entity, obj);
-			return repository.save(entity);			
+			return repository.save(entity);
 		} catch (EntityNotFoundException e) {
 			throw new ResourceNotFoundException(id);
 		}
@@ -51,20 +48,19 @@ public class VideoService {
 		entity.setDescricao(obj.getDescricao());
 		entity.setTitulo(obj.getTitulo());
 		entity.setUrl(obj.getUrl());
-		
+
 	}
-	
+
 	public void delete(Long id) {
 		try {
 			repository.deleteById(id);
 		} catch (EmptyResultDataAccessException e) {
 			throw new ResourceNotFoundException(id);
-			
-		}catch (DataIntegrityViolationException e) {
-			throw new VideoException(e.getMessage());
+
+		} catch (DataIntegrityViolationException e) {
+			throw new DatabaseException(e.getMessage());
 		}
 	}
-
-	
+		
 
 }

@@ -1,9 +1,9 @@
 package com.marcello.projetoalura.service.exception;
 
-public class VideoException extends RuntimeException {
+public class DatabaseException extends RuntimeException {
 	private static final long serialVersionUID = 1L;
 
-	public VideoException(String msg) {
+	public DatabaseException(String msg) {
 		super(msg);
 	}
 	
