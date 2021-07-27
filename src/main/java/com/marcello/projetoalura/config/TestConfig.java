@@ -1,6 +1,8 @@
 package com.marcello.projetoalura.config;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.TimeZone;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -31,10 +33,10 @@ public class TestConfig implements CommandLineRunner {
 		Categoria cat4 = new Categoria(null, "Suspense");
 
 		Video v1 = new Video(null, "Mansão mal assombrada", "Para maiores de 18 anos", " www.url.com.br", cat1);
-		Video v2 = new Video(null, "Loucademia de policia", "Classificação livre", "www.url.com.br ", cat2);
-		Video v3 = new Video(null, "Titanic", "Classificação Livre", " www.url.com.br", cat3);
+		Video v2 = new Video(null, "Loucademia", "Classificação livre", "www.url.com.br ", cat3);
+		Video v3 = new Video(null, "Titanic", "Classificação Livre", " www.url.com.br", cat2);
 
-		 categoriaRepository.saveAll(Arrays.asList(cat1, cat2, cat3, cat4));
+		categoriaRepository.saveAll(Arrays.asList(cat1, cat2, cat3, cat4));
 		videoRepository.saveAll(Arrays.asList(v1, v2, v3));
 
 //		v1.getCategoria().add(cat1);

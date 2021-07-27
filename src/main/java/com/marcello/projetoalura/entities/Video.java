@@ -18,7 +18,7 @@ public class Video implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private String id;
 
 	private String titulo;
 	private String descricao;
@@ -37,7 +37,7 @@ public class Video implements Serializable {
 	public Video() {
 	}
 
-	public Video(Long id, String titulo, String descricao, String url, Categoria categoria) {
+	public Video(String id, String titulo, String descricao, String url, Categoria categoria) {
 		super();
 		this.id = id;
 		this.titulo = titulo;
@@ -46,11 +46,11 @@ public class Video implements Serializable {
 		this.categoria = categoria;
 	}
 
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

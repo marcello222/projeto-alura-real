@@ -25,7 +25,7 @@ public class VideoService {
 		return repository.findAll();
 	}
 
-	public Video findById(Long id) {
+	public Video findById(String id) {
 		Optional<Video> obj = repository.findById(id);
 		return obj.get();
 	}
@@ -34,7 +34,7 @@ public class VideoService {
 		return repository.save(obj);
 	}
 
-	public Video update(Long id, Video obj) {
+	public Video update(String id, Video obj) {
 		try {
 			Video entity = repository.getOne(id);
 			updateVideo(entity, obj);
@@ -51,7 +51,7 @@ public class VideoService {
 
 	}
 
-	public void delete(Long id) {
+	public void delete(String id) {
 		try {
 			repository.deleteById(id);
 		} catch (EmptyResultDataAccessException e) {
@@ -61,6 +61,10 @@ public class VideoService {
 			throw new DatabaseException(e.getMessage());
 		}
 	}
-		
+
+	
+	public List<Video> findByTitulo(String text) {
+		return repository.findByTituloIgnoreCase(text);
+	}
 
 }

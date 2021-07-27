@@ -22,45 +22,49 @@ import com.marcello.projetoalura.resources.util.URL;
 import com.marcello.projetoalura.service.VideoService;
 
 @RestController
-@RequestMapping(value = "videos")
+@RequestMapping(value = "/videos")
 public class VideoResource {
-	
+
 	@Autowired
 	private VideoService service;
-	
-	
+
 	@GetMapping
-	public ResponseEntity<List<Video>> findAll(){
+	public ResponseEntity<List<Video>> findAll() {
 		List<Video> list = service.findAll();
 		return ResponseEntity.ok().body(list);
 	}
 
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<Video> findById(@PathVariable Long id) {
+	public ResponseEntity<Video> findById(@PathVariable String id) {
 		Video obj = service.findById(id);
 		return ResponseEntity.ok().body(obj);
 	}
-	
-	
+
 	@PostMapping
 	public ResponseEntity<Video> insert(@RequestBody Video obj) {
 		obj = service.insert(obj);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-				.buildAndExpand(obj.getId()).toUri();
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).body(obj);
 	}
-	
+
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<Video> update(@PathVariable Long id, @RequestBody Video obj) {
+	public ResponseEntity<Video> update(@PathVariable String id, @RequestBody Video obj) {
 		obj = service.update(id, obj);
 		return ResponseEntity.ok().body(obj);
 	}
-	
+
 	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<Void> delete(@PathVariable Long id) {
+	public ResponseEntity<Void> delete(@PathVariable String id) {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
+
 	
+	@RequestMapping(value="/search", method=RequestMethod.GET)
+	public ResponseEntity<List<Video>> findByTitulo(@RequestParam(value="text", defaultValue ="") String text) {
+		text = URL.decodeParam(text);
+		List<Video> list = service.findByTitulo(text);		
+		return ResponseEntity.ok().body(list);		
+	}
 
 }
